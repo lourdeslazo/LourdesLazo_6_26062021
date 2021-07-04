@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
@@ -21,7 +22,7 @@ app.use((_req, res, next) => {
     next();
 });
 
-
+app.use(bodyParser.json());
 
 
 //test produits
