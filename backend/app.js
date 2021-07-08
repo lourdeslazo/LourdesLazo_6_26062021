@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
+
+const Sauce = require('./models/sauces');
 
 const userRoutes = require('./routes/user');
 
@@ -22,26 +23,26 @@ app.use((_req, res, next) => {
     next();
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
 
+app.use(express.urlencoded());
 
-//test produits
-app.use('/api/sauces', (_req, res, _next) => {
-    const sauces = [
-        {
-            _id: '',
-            userId: '',
-            name: '',
-            manufacturer: '',
-            description: '',
-            mainPepper: '',
-            imageUrl: '',
-            heat: '',
-            likes: '',
-            dislikes: '',
-        },
-    ];
-    res.status(200).json(sauces);
+//infos requis du corps de la requete
+app.post('/api/sauces', (_req, res, _next) => {
+  delete req.body._id;
+  const sauce = new Sauce({
+    ...req.body
+  });
+  sauce.save() //enregistre dans la base de donnees
+    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    .catch(error => res.status(400).json({ error }));
+});
+
+//recupere produits
+app.use('/api/sauces', (_req, res, _next) => { //url demande par le frontend
+  Sauce.find()
+  .then(sauces => res.status(200).json(sauces))
+  .catch(error => res.status(400).json({ error }));
 });
 
 app.use('/api/auth', userRoutes); //enregistre la route dans lapp
