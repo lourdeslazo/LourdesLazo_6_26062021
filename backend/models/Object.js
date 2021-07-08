@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //Schema de donnes avec info du produit
-const sauceSchema = mongoose.Schema({
+const objectSchema = mongoose.Schema({
   userId: { type: String, required: true },  
   name: { type: String, required: true },
   manufacturer: { type: String, required: true },
@@ -15,4 +15,4 @@ const sauceSchema = mongoose.Schema({
   usersDisliked: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Sauce', sauceSchema);
+module.exports = mongoose.model('Object', objectSchema);

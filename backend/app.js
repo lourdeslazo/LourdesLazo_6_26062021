@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Sauce = require('./models/sauces');
+const Object = require('./models/Object');
 
 const userRoutes = require('./routes/user');
 
@@ -30,18 +30,25 @@ app.use(express.urlencoded());
 //infos requis du corps de la requete
 app.post('/api/sauces', (_req, res, _next) => {
   delete req.body._id;
-  const sauce = new Sauce({
+  const object = new Object({
     ...req.body
   });
-  sauce.save() //enregistre dans la base de donnees
+  object.save() //enregistre dans la base de donnees
     .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
     .catch(error => res.status(400).json({ error }));
 });
 
-//recupere produits
-app.use('/api/sauces', (_req, res, _next) => { //url demande par le frontend
-  Sauce.find()
-  .then(sauces => res.status(200).json(sauces))
+// recuperation dun seul objet
+app.get('/api/sauces/:id', (req, res, next) => {
+  Object.findOne({ _id: req.params.id})
+  .then(object => res.status(200).json(object))
+  .catch(error => res.status(404).json({ error }));
+});
+
+//recuperation des objets
+app.get('/api/sauces', (_req, res, _next) => { //url demande par le frontend
+  Object.find()
+  .then(objects => res.status(200).json(objects))
   .catch(error => res.status(400).json({ error }));
 });
 
