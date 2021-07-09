@@ -1,4 +1,5 @@
 const Object = require('../models/Object');
+const fs = require('fs');
 
 //Infos requis du corps de la requète
 exports.createObject = (req, res, next) => {
@@ -27,9 +28,16 @@ exports.modifyObject = (req, res, next) => {
 
 //Supprime un objet
 exports.deleteObject =  (req, res, next) => {
-  Object.deleteOne({ _id: req.params.id })
-  .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
-  .catch(error => res.status(400).json({ error }));
+  Object.findOne({ _id: req.params.id })
+  .then(object => {
+    const filename = object.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
+      Object.deleteOne({ _id: req.params.id })
+      .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+      .catch(error => res.status(400).json({ error }));
+    });
+  })
+  .catch(error => res.status(500).json({ error }));
 };
 
 //Recuperation d'un seul objet
