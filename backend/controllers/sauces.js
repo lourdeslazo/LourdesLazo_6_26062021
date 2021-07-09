@@ -15,7 +15,12 @@ exports.createObject = (req, res, next) => {
 
 //Modifie un objet
 exports.modifyObject = (req, res, next) => {
-  Object.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+  const objectProduct = req.file ?
+  {
+    ...JSON.parse(req.body.object),
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...req.body };
+  Object.updateOne({ _id: req.params.id }, { ...objectProduct, _id: req.params.id })
   .then(() => res.status(200).json({ message: 'Objet modifié !'}))
   .catch(error => res.status(400).json({ error }));
 };
