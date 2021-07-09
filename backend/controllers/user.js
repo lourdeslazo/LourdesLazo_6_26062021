@@ -15,7 +15,6 @@ exports.signup = (req, res, next) => { //cripte le mot de passe
         .catch(error => res.status(400).json({ error }));
     })
     .catch(error => res.status(500).json({ error }));
-
 };
 
 exports.login = (req, res, next) => { //on recupere lutilisateur de la base de donne 

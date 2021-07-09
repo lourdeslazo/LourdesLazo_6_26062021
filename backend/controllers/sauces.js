@@ -2,9 +2,11 @@ const Object = require('../models/Object');
 
 //Infos requis du corps de la requète
 exports.createObject = (req, res, next) => {
-    delete req.body._id;
+  const objectProduct = JSON.parse(req.body.object;
+    delete objectProduct._id;
     const object = new Object({
-      ...req.body
+      ...objectProduct,
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     object.save() //Enregistre dans la base de données
       .then(() => res.status(201).json({ message: 'Objet enregistré !'}))

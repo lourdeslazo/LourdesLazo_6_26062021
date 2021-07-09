@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userCtrl = require('../crontrollers/user');
+const userCtrl = require('../controllers/user');
 
 //le frontend envoie les informations de lutilisateur 
 router.post('/signup', userCtrl.signup);
