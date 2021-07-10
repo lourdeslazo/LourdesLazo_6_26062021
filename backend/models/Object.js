@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 //Schema de donnes avec info du produit
 const objectSchema = mongoose.Schema({
+  id: { type: String, require: true },
   userId: { type: String, required: true },  
   name: { type: String, required: true },
   manufacturer: { type: String, required: true },

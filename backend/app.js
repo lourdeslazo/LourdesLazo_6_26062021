@@ -1,6 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const app = express();
 const path = require('path');
 
 const saucesRoutes = require('./routes/sauces');
@@ -13,7 +13,7 @@ mongoose.connect('mongodb+srv://lourdes:iannickloic@cluster0.nc7zk.mongodb.net/t
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-const app = express();
+
 
 // Acces a lapi depuis nimporte quelle origine
 app.use((_req, res, next) => {
@@ -23,10 +23,10 @@ app.use((_req, res, next) => {
     next();
 });
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded());
 
-app.use('/images', express.static(path.join(_dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes); //enregistre la route dans lapp
