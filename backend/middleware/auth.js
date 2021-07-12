@@ -11,6 +11,6 @@ module.exports = (req, res, next) => { //on verifie le token
             next();
         }
     } catch (error) {
-        res.status(401).json({ error: error | 'Requete non authentifie !'});
+        res.status(401).json({ error: new Error('Requete non authentifie !')});
     }
 };
