@@ -89,7 +89,7 @@ exports.stateObject = (req, res, next) => {
 };
 
 //Supprime un objet
-exports.deleteObject =  (req, res, next) => {
+exports.deleteObject = (req, res, next) => {
   Object.findOne({ _id: req.params.id })
   .then(object => {
     const filename = object.imageUrl.split('/images/')[1];
