@@ -33,7 +33,7 @@ exports.login = (req, res, next) => {
               userId: user._id,
               token: jwt.sign(
                 { userId: user._id },
-                'RAMDOM_TOKEN_SECRET', //on encode le user
+                'RANDOM_TOKEN_SECRET', //on encode le user
                 { expiresIn: '24h'}
               )
             });

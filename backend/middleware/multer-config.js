@@ -1,8 +1,8 @@
 const multer = require('multer');
 
 const MIMES_TYPES = { //on genere les possibles extensions dimage
-    'image/jpg': 'jpg',
-    'image/jpeg': 'jpg',
+    'images/jpg': 'jpg',
+    'images/jpeg': 'jpg',
     'images/png': 'png'
 };
 
@@ -17,4 +17,4 @@ const storage = multer.diskStorage({ //on enregistre les fichiers
     }
 });
 
-module.exports = multer({ storage }).single('image');
+module.exports = multer({ storage : storage }).single('images');
