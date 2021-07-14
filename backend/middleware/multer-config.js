@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-const MIMES_TYPES = { //on genere les possibles extensions dimage
+const MIME_TYPES = { //on genere les possibles extensions dimage
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
     'image/png': 'png'
@@ -12,7 +12,7 @@ const storage = multer.diskStorage({ //on enregistre les fichiers
     },
     filename: (req, file, callback) => { //on lui donne le nom du fichier
         const name = file.originalname.split(' ').join('_');
-        const extension = MIMES_TYPES[file.mimetype]; //on lui donne lextension
+        const extension = MIME_TYPES[file.mimetype]; //on lui donne lextension
         callback(null, name + Date.now() + '.' + extension);
     }
 });
