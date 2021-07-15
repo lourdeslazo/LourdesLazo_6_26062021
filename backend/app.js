@@ -1,10 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
 const path = require('path');
+
+//securite
+const cookieSession = require('cookie-session');
+const helmet = require('helmet');
+const rateLimit = require('./middleware/ratelimit');
 
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
+
+const app = express();
+
+app.use(rateLimit); //limite de requetes
+app.use(helmet()); //protection des en tetes http
+
 
 //conexion a mongoose
 mongoose.connect('mongodb+srv://newUser:kgnUbFhx0qTXqJ1v@cluster0.0fosz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
@@ -22,6 +32,16 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+// cookies en http
+app.use(cookieSession({
+  secret: "sessionS3cur3",
+  cookie : {
+    secure : true,
+    httpOnly : true,
+    domain : "http://localhost:3000"
+  }
+}))
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
