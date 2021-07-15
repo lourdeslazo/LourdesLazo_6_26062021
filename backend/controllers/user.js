@@ -2,8 +2,6 @@ const bcrypt = require('bcrypt'); //cryptage de donnees
 const jwt = require('jsonwebtoken'); 
 const User = require('../models/User');
 
-
-
 exports.signup = (req, res, next) => { 
     //cripte le mot de passe
     bcrypt.hash(req.body.password, 10)

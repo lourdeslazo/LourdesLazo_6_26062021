@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
+
 //securite
 const cookieSession = require('cookie-session');
 const helmet = require('helmet');
@@ -35,11 +36,11 @@ app.use((req, res, next) => {
 
 // cookies en http
 app.use(cookieSession({
-  secret: "sessionS3cur3",
+  secret: 'sessionS3cur3',
   cookie : {
     secure : true,
     httpOnly : true,
-    domain : "http://localhost:3000"
+    domain : 'http://localhost:3000'
   }
 }))
 
