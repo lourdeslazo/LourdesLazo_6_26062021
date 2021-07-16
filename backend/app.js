@@ -7,6 +7,7 @@ const path = require('path');
 const cookieSession = require('cookie-session');
 const helmet = require('helmet');
 const rateLimit = require('./middleware/ratelimit');
+const nocache = require("nocache");
 
 require('dotenv').config();
 const mongoUri = process.env.MONGO_URI;
@@ -15,6 +16,7 @@ const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 const app = express();
+app.use(nocache());
 
 app.use(rateLimit); //limite de requetes
 app.use(helmet()); //protection des en tetes http
