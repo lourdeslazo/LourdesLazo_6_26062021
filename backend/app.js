@@ -8,6 +8,9 @@ const cookieSession = require('cookie-session');
 const helmet = require('helmet');
 const rateLimit = require('./middleware/ratelimit');
 
+require('dotenv').config();
+const mongoUri = process.env.MONGO_URI;
+
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
@@ -16,9 +19,8 @@ const app = express();
 app.use(rateLimit); //limite de requetes
 app.use(helmet()); //protection des en tetes http
 
-
 //conexion a mongoose
-mongoose.connect('mongodb+srv://newUser:kgnUbFhx0qTXqJ1v@cluster0.0fosz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect(mongoUri,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
