@@ -3,7 +3,7 @@ const router = express.Router()
 const passwordSchema = require('../middleware/passwordVerify');
 const userCtrl = require('../controllers/user')
 
-//le frontend envoie les informations de lutilisateur 
+//Le frontend envoie les informations de l'utilisateur 
 router.post('/signup', passwordSchema, userCtrl.signup);
 router.post('/login', userCtrl.login);
 

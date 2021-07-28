@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//Schema de donnes avec info du produit
+//Schema de données avec info du produit
 const sauceSchema = mongoose.Schema({
   
   userId: { type: String, required: true },  

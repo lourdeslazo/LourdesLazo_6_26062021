@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => { //on verifie le token 
+module.exports = (req, res, next) => { //On vérifie le token 
     try {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
@@ -11,6 +11,6 @@ module.exports = (req, res, next) => { //on verifie le token
             next();
         }
     } catch (error) {
-        res.status(401).json({ error: new Error('Requete non authentifie !')});
+        res.status(401).json({ error: new Error('Requête non authentifié !')});
     }
 };

@@ -1,9 +1,9 @@
+// Modules requis
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
-
-//securite
+//Mise en place de la sécurité
 const cookieSession = require('cookie-session');
 const helmet = require('helmet');
 const rateLimit = require('./middleware/ratelimit');
@@ -12,25 +12,25 @@ const nocache = require("nocache");
 require('dotenv').config();
 const mongoUri = process.env.MONGO_URI;
 
+//Routes
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 const app = express();
 app.use(nocache());
 
-app.use(rateLimit); //limite de requetes
-app.use(helmet()); //protection des en tetes http
+app.use(rateLimit); //Limite de requêtes
+app.use(helmet()); //Protection des entêtes Http
 
-//conexion a mongoose
+//Conexion à Mongoose
 mongoose.connect(mongoUri,
   { useNewUrlParser: true,
-    useUnifiedTopology: true })
+    useUnifiedTopology: true 
+  })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-
-
-// Acces a lapi depuis nimporte quelle origine
+//Accès à l'API depuis n'importe quelle origine
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// cookies en http
+//Cookies en Http
 app.use(cookieSession({
   secret: 'sessionS3cur3',
   cookie : {
@@ -53,7 +53,8 @@ app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+//Enregistre les routes dans l'app
 app.use('/api/sauces', saucesRoutes);
-app.use('/api/auth', userRoutes); //enregistre la route dans lapp
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
